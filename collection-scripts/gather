@@ -15,29 +15,32 @@ group_resources=()
 named_resources+=(ns/openshift-cluster-version)
 group_resources+=(clusterversion)
 
+# Cluster Cloud Controller Manager related namespaces
+named_resources+=(ns/openshift-cloud-controller-manager ns/openshift-cloud-controller-manager-operator)
+
 # Operator Resources
-group_resources+=(clusteroperators)
+# group_resources+=(clusteroperators)
 
 # Certificate Resources
-group_resources+=(certificatesigningrequests)
+# group_resources+=(certificatesigningrequests)
 
 # Machine/Node Resources
-group_resources+=(nodes)
+# group_resources+=(nodes)
 
 # Namespaces/Project Resources
-named_resources+=(ns/default ns/openshift ns/kube-system ns/openshift-etcd ns/openshift-kni-infra)
+# named_resources+=(ns/default ns/openshift ns/kube-system ns/openshift-etcd ns/openshift-kni-infra)
 
 # Storage Resources
-group_resources+=(storageclasses persistentvolumes volumeattachments csidrivers csinodes volumesnapshotclasses volumesnapshotcontents)
+# group_resources+=(storageclasses persistentvolumes volumeattachments csidrivers csinodes volumesnapshotclasses volumesnapshotcontents)
 
 # Image-source Resources
-group_resources+=(imagecontentsourcepolicies.operator.openshift.io)
+# group_resources+=(imagecontentsourcepolicies.operator.openshift.io)
 
 # Networking Resources
-group_resources+=(networks.operator.openshift.io)
+# group_resources+=(networks.operator.openshift.io)
 
 # NodeNetworkState
-resources+=(nodenetworkstates nodenetworkconfigurationenactments nodenetworkconfigurationpolicies)
+# resources+=(nodenetworkstates nodenetworkconfigurationenactments nodenetworkconfigurationpolicies)
 
 # Run the Collection of Resources using inspect
 # running accross all-namespaces for the few "Autoscaler" resouces.
@@ -46,29 +49,29 @@ group_resources_text=$(IFS=, ; echo "${group_resources[*]}")
 oc adm inspect --dest-dir must-gather "${group_resources_text}"
 
 # Gather monitoring data from the cluster
-/usr/bin/gather_monitoring
+# /usr/bin/gather_monitoring
 
 # Gather optional operator resources from all namespaces
-/usr/bin/gather_olm
+# /usr/bin/gather_olm
 
 # Gather API Priority and Fairness Endpoints
-/usr/bin/gather_priority_and_fairness
+# /usr/bin/gather_priority_and_fairness
 
 # Gather etcd information
-/usr/bin/gather_etcd
+# /usr/bin/gather_etcd
 
 # Gather Validation and Mutating Admission Webhook Objects
 # TODO the kube-apiserver operator should list these as related resources
-/usr/bin/gather_admission_webhooks
+# /usr/bin/gather_admission_webhooks
 
 # Gather Service Logs (using a supplemental Script); Scoped to Masters.
-/usr/bin/gather_service_logs master
+# /usr/bin/gather_service_logs master
 
 # Gather Windows Kubernetes component logs
-/usr/bin/gather_windows_node_logs
+# /usr/bin/gather_windows_node_logs
 
 # Gather HAProxy config files
-/usr/bin/gather_haproxy_config
+# /usr/bin/gather_haproxy_config
 
 # force disk flush to ensure that all data gathered is accessible in the copy container
 sync
