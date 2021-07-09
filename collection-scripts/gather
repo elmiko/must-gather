@@ -39,6 +39,9 @@ group_resources+=(networks.operator.openshift.io)
 # NodeNetworkState
 resources+=(nodenetworkstates nodenetworkconfigurationenactments nodenetworkconfigurationpolicies)
 
+# Cluster Cloud Controller Manager related namespaces
+named_resources+=(ns/openshift-cloud-controller-manager ns/openshift-cloud-controller-manager-operator)
+
 # Run the Collection of Resources using inspect
 # running across all-namespaces for the few "Autoscaler" resources.
 oc adm inspect --dest-dir must-gather --rotated-pod-logs "${named_resources[@]}"
