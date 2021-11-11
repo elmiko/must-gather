@@ -84,3 +84,9 @@ oc adm inspect --dest-dir must-gather --rotated-pod-logs "${group_resources_text
 
 # force disk flush to ensure that all data gathered is accessible in the copy container
 sync
+
+# Create investigator html
+okd-camgi --output /must-gather/investigator.html /must-gather
+
+# force disk flush to ensure that all data gathered is accessible in the copy container
+sync

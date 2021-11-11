@@ -3,6 +3,11 @@ WORKDIR /go/src/github.com/openshift/must-gather
 COPY . .
 ENV GO_PACKAGE github.com/openshift/must-gather
 
-FROM registry.ci.openshift.org/openshift/origin-v4.0:cli
-COPY --from=builder /go/src/github.com/openshift/must-gather/collection-scripts/* /usr/bin/
+FROM registry.ci.openshift.org/ocp/4.8:cli as shell
 
+FROM registry.access.redhat.com/ubi8/python-36
+USER root
+RUN pip3 install okd-camgi
+COPY --from=shell /usr/bin/oc /usr/bin/oc
+COPY --from=builder /go/src/github.com/openshift/must-gather/collection-scripts/* /usr/bin/
+WORKDIR /
